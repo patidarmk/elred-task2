@@ -119,7 +119,7 @@ const ProductDetails = ({ selectedItem, closeModel }) => {
         <span></span>
         <div>
           <span>{selectedItem?.itemDescription}</span>
-          <span></span>
+          <span>{getselectedVarient[0].grossPrice}</span>
         </div>
         <p>Description</p>
         <span>Please Select Color Description </span>
