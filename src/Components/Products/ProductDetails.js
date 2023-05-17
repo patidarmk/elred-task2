@@ -117,7 +117,7 @@ const ProductDetails = ({ selectedItem, closeModel }) => {
         <span> {selectedItem?.itemDescription}</span>
         <img src="https://newpublicbucket.s3.us-east-2.amazonaws.com/productListing/categories/category2.png" />
         <span></span>
-        <div>
+        <div className="about-product">
           <span>{selectedItem?.itemDescription}</span>
           <span>{getselectedVarient[0].grossPrice}</span>
         </div>

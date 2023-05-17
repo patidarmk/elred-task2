@@ -309,3 +309,7 @@ button[disabled]:hover {
 .cart-price button {
   width: 40%;
 }
+.about-product {
+	display:flex;
+	justify-content:space-between;
+}
