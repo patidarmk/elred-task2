@@ -1,3 +1,4 @@
+import crossSvg from "../../assets/cross.svg";
 const Cart = () => {
   let cart = localStorage.getItem("cart");
   cart = JSON.parse(cart);
@@ -11,6 +12,14 @@ const Cart = () => {
   const totalPrice = ItemTotal + SGST + CGST + IGST + taxAmount;
   return (
     <div className="cart-details">
+	<div className="cart-info">
+	<span>Cart</span>
+	<img
+                className="orderlist-close"
+                src={crossSvg}
+                onClick={closeModel}
+              />
+	</div>
       <table>
         <tr>
           <th>Product</th>

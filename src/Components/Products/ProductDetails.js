@@ -198,7 +198,6 @@ const ProductDetails = ({ selectedItem, closeModel }) => {
                 <th>Price</th>
               </tr>
               {orderList.map((order) => {
-                console.log(order);
                 return (
                   <tr>
                     <td>
@@ -233,7 +232,7 @@ const ProductDetails = ({ selectedItem, closeModel }) => {
           </div>
         </div>
       )}
-      {showCart && <Cart cart={cart} />}
+      {showCart && <Cart cart={cart} closeModel={closeModel} />}
     </div>
   );
 };

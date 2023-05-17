@@ -293,6 +293,10 @@ button[disabled]:hover {
   gap: 1rem;
   margin-top: 0.5rem;
 }
+.cart-info {
+	display:flex;
+	justify-content:space-between;
+}
 
 .instruction {
   display: flex;
