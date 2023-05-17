@@ -1,5 +1,5 @@
 import crossSvg from "../../assets/cross.svg";
-const Cart = () => {
+const Cart = ({closeModel}) => {
   let cart = localStorage.getItem("cart");
   cart = JSON.parse(cart);
   const ItemTotal = cart.reduce((total, item) => total + item.price, 0);
