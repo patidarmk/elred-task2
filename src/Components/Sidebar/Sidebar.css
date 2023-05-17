@@ -1,0 +1,97 @@
+.sidebar {
+  height: 83%;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 5px;
+  width: 15vw;
+  margin-left: 1rem;
+  /* max-height:83% ; */
+}
+.nav-link-svg {
+  width: 15px;
+  height: 15px;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  padding: 0.7rem 1.2rem;
+  gap: 0.5rem;
+}
+
+.sidebar-logo {
+  width: 20%;
+}
+
+.nav-links {
+  list-style: none;
+}
+
+.nav-link,
+.nav-link-active {
+  display: flex;
+  gap: 1rem;
+  text-align: left;
+  width: 95%;
+  margin-bottom: 2px;
+  color: #758ca3;
+  /* font-size: 14px; */
+  padding: 0.6rem 0.5rem;
+}
+
+.nav-link-active {
+  border-radius: 5px;
+  background-color: #ffe6e6;
+  color: #b30000;
+}
+
+.nav-link-title {
+  font-size: 14px;
+}
+
+.disable:hover {
+  background-color: #ffe6e6;
+  color: #b30000;
+}
+
+.nav-link:hover {
+  background: #e6e6e6;
+  border-radius: 5px;
+}
+
+.sidebar-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid #e6e6e6;
+  margin: 10px;
+  margin-top: auto;
+  text-align: center;
+  padding: 1rem;
+  gap: 5px;
+}
+
+.sidebar-footer p {
+  font-size: 12px;
+}
+
+.profile-btn {
+  width: 7rem;
+  display: inline-block;
+  font-size: 14px;
+  padding: 0.4rem;
+  outline: none;
+  border: none;
+  color: #ffffff;
+  border-radius: 5px;
+  text-align: center;
+  /* line-height: 5rem; */
+  text-decoration: none;
+  background-color: #000;
+  margin-top: 5px;
+}
+.see-my-work--btn {
+  color: #fff;
+}

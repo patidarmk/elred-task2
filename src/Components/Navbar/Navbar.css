@@ -1,0 +1,84 @@
+.navbar {   
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.navbar-logo {
+    width: 120px;
+    
+}
+
+.navbar-logo-image {
+    width: 50%;
+    padding-left: 1.4rem;
+}
+
+.navbar-search {
+    margin-left: -14rem;
+    display: flex;
+    width: 22rem;
+    height: 2.2rem;
+    background-color: #e6e6e6;
+    border-radius: 0.5rem;
+}
+
+.navbar-search input {
+    outline: none;
+    background-color:transparent;
+    border: none;
+}
+
+.navbar-search-svg {
+    width: 15px;
+    padding: 0 .5rem;
+}
+
+.navbar-checkout {
+    display: flex;
+    width: 8rem;
+    height: 2.2rem;
+    align-items: center;
+    background-color: #000;
+    color: white;
+    border-radius: 5px;
+    column-gap:0rem;
+    padding: .1rem 1rem;
+    margin-right: -15rem;
+}
+
+.navbar-user {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500;
+    color: #1a1a1a;
+    padding-right: 2rem;
+}
+
+.navbar-user-avatar {
+    margin-right: 5px;
+}
+
+.navbar-user-dropdown {
+    width: 22px;
+    margin-top: 2px;
+}
+
+.profile-btn {
+    display:inline-block;
+    font-size: 1rem;
+    font-weight: 500;
+    outline:none;
+    border: none;
+    color: #FFFFFF;
+    border-radius: .5rem;
+    text-align: center;
+    text-decoration: none;
+}
+.see-my-work--btn {
+    
+    color: #fff;
+  }
