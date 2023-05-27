@@ -33,7 +33,7 @@ const Cart = ({
   }, [orderList]);
 
   let ItemTotal;
-  if (cart) {
+  if (cart.lenth>0) {
     ItemTotal = cart.reduce((total, item) => total + item[0].price, 0);
   }
   const SGST = Number((ItemTotal / 100) * 9).toFixed(2);
