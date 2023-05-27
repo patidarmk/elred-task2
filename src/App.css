@@ -7,8 +7,31 @@
 body {
   background-color: #e6e6e6;
   box-sizing: border-box;
-  color: #666666;
+  /* color: #666666; */
   font-family: "roboto";
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #4c4c4c #fafafa;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #fafafa;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #ddd0e3;
+  border-radius: 10px;
+  border: 1px solid #ffffff;
 }
 
 h3 {
@@ -37,21 +60,43 @@ h3 {
 
 .cart {
   width: 29vw;
-  height: 88.5vh;
+  height: 86.6vh;
   border-radius: 5px;
+}
+
+.cart-details {
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cart-items {
+  overflow-y: auto;
+  height: 35vh;
+  overflow-x: hidden;
+  padding-right: 2rem;
+  background-color: #fff;
+}
+.cart-items-all {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 86.5vh;
+  padding-right: 2rem;
   background-color: #fff;
 }
 
 .footer-menu {
   /* display:none; */
   margin-top: 1rem;
-  height: 86%;
-  width: 68.5vw;
+  height: 100%;
+  width: 68vw;
   background-color: #fff;
   border-radius: 5px;
   display: flex;
   gap: 2rem;
   align-items: center;
+  margin-left:1rem;
 }
 .footer-menu img {
   width: 100px;
@@ -67,4 +112,24 @@ h3 {
   column-gap: 0.5rem;
   /* height: 100%; */
   row-gap: 1rem;
+}
+
+.search {
+  display: flex;
+  width: 15rem;
+  height: 2.2rem;
+  background-color: #e6e6e6;
+  border-radius: 0.5rem;
+  margin-right: 1rem;
+}
+
+.search input {
+  outline: none;
+  background-color: transparent;
+  border: none;
+}
+
+.search-svg {
+  width: 15px;
+  padding: 0 0.5rem;
 }

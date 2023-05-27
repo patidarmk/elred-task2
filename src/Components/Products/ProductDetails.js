@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react";
 import crossSvg from "../../assets/cross.svg";
+import productDefaultImg from "../../assets/product-default.svg";
 import Cart from "./Cart";
-const ProductDetails = ({ selectedItem, closeModel }) => {
-  const [orderList, setOrderList] = useState([]);
+const ProductDetails = ({
+  selectedItem,
+  closeModel,
+  orderList,
+  setCart,
+  setOrderList,
+  toastItemAdded,
+  toastRemoveItem
+}) => {
   const [quantity, setQuantity] = useState(0);
-  const [varient, setVarients] = useState(selectedItem?.variants[0].colorCode);
-  const [cartPrice, setCartPrice] = useState(0);
-  const [error, setError] = useState("");
   const [disabled, setDisabled] = useState(false);
-  const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
 
   const [colorInput, setColorInput] = useState(
@@ -37,26 +41,22 @@ const ProductDetails = ({ selectedItem, closeModel }) => {
       index === self.findIndex((o) => o.packingCode === obj.packingCode)
   );
 
-  const getselectedVarient = selectedItem?.variants.filter(
+  const variants = selectedItem?.variants.filter(
     (obj, index, self) =>
       colorInput === obj.colorCode && packageInput === obj.packingCode
   );
 
   const handleQuantity = (e) => {
-    // if (Number(e.target.value) >= 1) {
     setQuantity(Number(e.target.value));
-    // }
-    console.log(quantity);
-    // handleCheckAvail();
   };
 
   const handleOrderList = () => {
     setShowCart(false);
     let obj = Object.assign({}, selectedItem);
-    if (getselectedVarient.length == 0) {
+    if (variants.length == 0) {
       setDisabled(true);
     }
-    obj.variants = [...getselectedVarient];
+    obj.variants = [...variants];
 
     // Update cart item quantity if already in cart
     if (
@@ -69,10 +69,15 @@ const ProductDetails = ({ selectedItem, closeModel }) => {
           cartItem?.variants[0]?._id === obj.variants[0]._id
             ? {
                 ...cartItem,
-                amount: Number(cartItem.amount) + quantity,
+                amount:
+                  Number(cartItem?.amount) + quantity > 100
+                    ? 100
+                    : Number(cartItem?.amount) + quantity,
                 price:
-                  (Number(cartItem.amount) + quantity) *
-                  cartItem?.variants[0].grossPrice
+                  Number(cartItem?.amount) + quantity > 100
+                    ? 100 * cartItem?.variants[0].grossPrice
+                    : (Number(cartItem?.amount) + quantity) *
+                      cartItem?.variants[0].grossPrice
               }
             : cartItem
         )
@@ -85,8 +90,13 @@ const ProductDetails = ({ selectedItem, closeModel }) => {
         ...orderList,
         {
           ...obj,
-          amount: quantity,
-          price: quantity * getselectedVarient[0].grossPrice
+          amount: quantity > 100 ? 100 : quantity < 12 ? 12 : quantity,
+          price:
+            quantity > 100
+              ? 100 * variants[0].grossPrice
+              : quantity < 12
+              ? 12 * variants[0].grossPrice
+              : quantity * variants[0].grossPrice
         } // <-- initial amount 1
       ]);
     }
@@ -96,32 +106,53 @@ const ProductDetails = ({ selectedItem, closeModel }) => {
   const handleRemove = (id) => {
     const arr = orderList.filter((item) => item.variants[0]._id !== id);
     setOrderList(arr);
+    toastRemoveItem();
   };
 
   useEffect(() => {
     const price = orderList.reduce((total, item) => total + item.price, 0);
-    console.log(price);
   }, [orderList]);
 
   const handleCart = () => {
-    console.log("orderList");
-    console.log(orderList);
-    localStorage.setItem("cart", JSON.stringify(orderList));
+    let cartItem = localStorage.getItem("cart");
+    if (cartItem) {
+      cartItem = JSON.parse(cartItem);
+      cartItem.push(orderList);
+      localStorage.setItem("cart", JSON.stringify(cartItem));
+    } else {
+      let cartItem = [];
+      cartItem.push(orderList);
+      localStorage.setItem("cart", JSON.stringify(cartItem));
+    }
+    toastItemAdded();
     setShowCart(true);
     setOrderList([]);
+    closeModel();
   };
 
   return (
     <div className="product-details-container">
       <div className="product-details">
         <span> {selectedItem?.itemDescription}</span>
-        <img src="https://newpublicbucket.s3.us-east-2.amazonaws.com/productListing/categories/category2.png" />
-        <span></span>
-        <div className="about-product">
+        <img
+          src={
+            selectedItem?.productImages[0] != null
+              ? selectedItem?.productImages[0]
+              : productDefaultImg
+          }
+          alt=""
+        />
+        <span>#{variants[0]?.bpCatalogNumber}</span>
+        <div className="product-title">
           <span>{selectedItem?.itemDescription}</span>
-          <span>{getselectedVarient[0].grossPrice}</span>
+          {variants && (
+            <span>
+              {selectedItem.currency.symbol}
+              {variants[0]?.grossPrice}
+            </span>
+          )}
         </div>
-        <p>Description</p>
+        <p>Neque porro quisquam est qui dolorem</p>
         <span>Please Select Color Description </span>
         <ul>
           {colorVarients?.map((varient) => {
@@ -154,9 +185,7 @@ const ProductDetails = ({ selectedItem, closeModel }) => {
           })}
         </ul>
         <span className="error">
-          {getselectedVarient?.length === "0"
-            ? "Combination is not available"
-            : ""}{" "}
+          {variants?.length == 0 ? "Combination is not available" : ""}{" "}
         </span>
         <label>Enter Quantity:</label>
         <input
@@ -164,13 +193,15 @@ const ProductDetails = ({ selectedItem, closeModel }) => {
           type="number"
           min="1"
           onChange={handleQuantity}
+          value={quantity || ""}
         />
-        <span className="error">
-          {quantity === 0 ? "min. quantity 1" : ""}{" "}
-        </span>
+        <span className="error">Min. Quantity 12</span>
+        <label>
+          <input type="checkbox" /> Need Urgent Order
+        </label>
         <button
           disabled={
-            quantity < 1 || quantity === "" || getselectedVarient.length === 0
+            quantity < 1 || quantity === "" || variants.length === 0
               ? true
               : false
           }
@@ -201,18 +232,29 @@ const ProductDetails = ({ selectedItem, closeModel }) => {
                 return (
                   <tr>
                     <td>
-                      <div className="orderlist-item--title">
-                        <span className="orderlist-item--title-main">
-                          {order.itemDescription}
-                        </span>
-                        <span className="orderlist-item--sub-title">
-                          {order.variants[0].colorDescription} |{" "}
-                          {order.variants[0].packingDescription}
-                        </span>
+                      <div className="orderlist-item--details">
+                        <img
+                          className="cart-productimage"
+                          src={
+                            order?.productImages != ""
+                              ? order?.productImages
+                              : productDefaultImg
+                          }
+                          alt=""
+                        />
+                        <div className="orderlist-item--title">
+                          <span className="orderlist-item--title-main">
+                            {order.itemDescription}
+                          </span>
+                          <span className="orderlist-item--sub-title">
+                            {order.variants[0].colorDescription} |{" "}
+                            {order.variants[0].packingDescription}
+                          </span>
+                        </div>
                       </div>
                     </td>
                     <td>{order.amount}</td>
-                    <td>{order.variants[0].grossPrice + "*" + order.amount}</td>
+                    <td>{order.price}</td>
                     <td>
                       <img
                         className="orderlist-delete"
@@ -225,14 +267,13 @@ const ProductDetails = ({ selectedItem, closeModel }) => {
               })}
             </table>
             {orderList.length >= 1 && (
-              <button className="add-to-cart" onClick={handleCart}>
+              <button className="add-to-cart add-to-list" onClick={handleCart}>
                 add to cart{" "}
               </button>
             )}
           </div>
         </div>
       )}
-      {showCart && <Cart cart={cart} closeModel={closeModel} />}
     </div>
   );
 };

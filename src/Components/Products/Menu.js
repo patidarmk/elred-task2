@@ -1,11 +1,16 @@
 import homeSvg from "../../assets/home.svg";
 
-const Menu = ({ handlerHome, subCategoriesList, getProducts }) => {
+const Menu = ({
+  handlerHome,
+  subCategoriesList,
+  getProducts,
+  handleCloseOrderList
+}) => {
   const img =
     "https://newpublicbucket.s3.us-east-2.amazonaws.com/productListing/categories/category1.png";
 
   return (
-    <div className="footer-menu">
+    <div className="footer-menu" onClick={handleCloseOrderList}>
       <div>
         <img src={homeSvg} onClick={handlerHome} />
       </div>

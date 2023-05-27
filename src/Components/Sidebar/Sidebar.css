@@ -1,5 +1,5 @@
 .sidebar {
-  height: 83%;
+  /* max-height: 100%; */
   background-color: #fff;
   display: flex;
   align-items: center;
@@ -8,6 +8,7 @@
   width: 15vw;
   margin-left: 1rem;
   /* max-height:83% ; */
+  height: auto;
 }
 .nav-link-svg {
   width: 15px;

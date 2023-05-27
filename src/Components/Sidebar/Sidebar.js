@@ -4,9 +4,9 @@ import dashboard from "../../assets/dashboard.svg";
 import orders from "../../assets/orders.svg";
 import products from "../../assets/products.svg";
 
-const Sidebar = () => {
+const Sidebar = ({ handleCloseOrderList }) => {
   return (
-    <div className="sidebar">
+    <div className="sidebar" onClick={handleCloseOrderList}>
       <div className="sidebar-header">
         <img className="sidebar-logo" src={logo} alt="logo" />
         <span>A.T. Inks</span>
@@ -16,8 +16,8 @@ const Sidebar = () => {
           <img className="nav-link-svg" src={dashboard} alt="logo" />
           <span className="nav-link-title">Dashboard</span>
         </li>
-        <li className="nav-link">
-          <img className="nav-link-svg" src={products} alt="logo" />
+        <li className=" nav-link-active">
+          <img className="nav-link-svg " src={products} alt="logo" />
           <span className="nav-link-title">All Products</span>
         </li>
         <li className="nav-link">
